@@ -8,7 +8,7 @@ endif
 
 let g:colors_name="vilight"
 
-hi Normal         guifg=#b6b6b6           guibg=#212121
+hi Normal         guifg=#f8f8f8			  guibg=#1a1a1a 
 hi Cursor         guifg=#212121           guibg=#9ca9b7
 hi CursorLine	  guifg=#ffffff		      guibg=#6c8095
 hi Directory      guifg=#6c8095            guibg=NONE
@@ -17,7 +17,7 @@ hi Folded         guifg=#9ca9b7           guibg=NONE        gui=italic
 hi FoldColumn	  guifg=#9ca9b7           guibg=NONE        gui=italic
 hi vimFold	      guifg=#dee4ea		      guibg=NONE        gui=italic
 hi IncSearch      guifg=#212121           guibg=#b6b6b6
-hi LineNr         guifg=#424242           guibg=NONE
+hi LineNr         guifg=#888888           guibg=#333333
 hi ModeMsg        guifg=#8f9d6a           guibg=NONE
 hi MoreMsg        guifg=#8f9d6a           guibg=NONE
 hi NonText        guifg=#424242           guibg=NONE
@@ -61,6 +61,8 @@ hi PmenuSbar      guibg=#b6b6b6
 hi PmenuThumb     guifg=#424242
 
 "more groups
+hi Definition	  guifg=#f9ee98 guibg=NONE gui=NONE
+hi Entity		  guifg=#9B703f guibg=NONE gui=NONE
 hi pythonClass  guifg=#cda869 guibg=NONE gui=NONE
 hi pythonFunction  guifg=#CF6A4C guibg=NONE gui=NONE
 hi pythonInterpolationDelimiter  guifg=NONE guibg=NONE gui=NONE
@@ -75,6 +77,7 @@ hi pythonEscape  guifg=NONE guibg=NONE gui=NONE
 hi pythonControl  guifg=#4f94cd guibg=NONE gui=NONE
 hi pythonClassVariable  guifg=NONE guibg=NONE gui=NONE
 hi pythonOperator  guifg=NONE guibg=NONE gui=NONE
+hi pythonParamName guifg=#7587A6 guibg=NONE gui=NONE
 hi pythonException  guifg=#cf6a4c guibg=NONE gui=NONE
 hi pythonPseudoVariable  guifg=NONE guibg=NONE gui=NONE
 

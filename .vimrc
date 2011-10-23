@@ -8,7 +8,12 @@ set nocompatible
 call pathogen#helptags()
 call pathogen#runtime_append_all_bundles()
 
-if &t_Co >= 256 || has("gui_running")
+
+if has("gui_running")
+	colorscheme mylight
+endif
+
+if &t_Co >= 256 && (!has("gui_running"))
     colorscheme twilight
 "	colorscheme vividchalk
 "	colorscheme jellybeans
@@ -52,10 +57,28 @@ set incsearch     " show search matches as you type
 set pastetoggle=<F2>
 
 
-"let python_highlight_all=1
 
 if has("eval")
   let python_highlight_all = 1
   let python_slow_sync = 1
 endif
+
+
+" Shortcut to rapidly toggle `set list`
+nmap <leader>l :set list!<CR>
+ 
+" Use the same symbols as TextMate for tabstops and EOLs
+set listchars=tab:▸\ ,eol:¬
+"Invisible character colors
+highlight NonText guifg=#4a4a59
+highlight SpecialKey guifg=#4a4a59
+
+" Show syntax highlighting groups for word under cursor
+nmap <C-S-P> :call <SID>SynStack()<CR>
+function! <SID>SynStack()
+  if !exists("*synstack")
+    return
+  endif
+  echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
+endfunc
  

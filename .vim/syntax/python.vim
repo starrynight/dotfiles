@@ -94,25 +94,7 @@ syn keyword pythonStatement pass raise
 syn keyword pythonStatement global assert
 syn keyword pythonStatement lambda yield
 syn keyword pythonStatement with nonlocal
-syn keyword pythonStatement False None True
-
-" Class definitions
-syn region  pythonClass start="^\s*class\>" end="\s*:" contains=pythonClassDef,pythonClassName,pythonSuperclasses
-syn keyword pythonClassDef class contained nextgroup=pythonClassName
-syn match   pythonClassName	"[a-zA-Z_][a-zA-Z0-9_]*" display contained nextgroup=pythonSuperclasses skipwhite
-syn region  pythonSuperclasses start="("ms=s+1 end=")"me=e-1 keepend contained contains=pythonSuperclass transparent
-syn match   pythonSuperclass "[a-zA-Z_][a-zA-Z_0-9]*" contained
-
-" Function definitions
-syn region  pythonFunc start="^\s*def\>" end=")\s*:" keepend contains=pythonFuncDef,pythonFuncName,pythonFuncParams
-syn keyword pythonFuncDef def contained nextgroup=pythonFuncName skipwhite
-syn match   pythonFuncName	"[a-zA-Z_][a-zA-Z0-9_]*" display contained nextgroup=pythonFuncParams skipwhite
-syn region  pythonFuncParams start="("ms=s+1 end=")"me=e-1 contained transparent contains=pythonParam 
-syn region   pythonParam start="[a-zA-Z_]" end="\(,\|)\s*:\)" contained contains=pythonParamName,pythonParamDefault,pythonDefaultAssignment transparent nextgroup=pythonParam
-syn match pythonParamName "[a-zA-Z_][a-zA-Z0-9_]*" contained nextgroup=pythonDefaultAssignment skipwhite skipnl
-syn match pythonDefaultAssignment "=" nextgroup=pythonParamDefault skipwhite contained skipnl
-
-syn match pythonParamDefault "=\@<=[^,]*" contained transparent contains=@pythonStringType,@pythonNumberType,@pythonBuiltin,pythonKeyword
+"syn keyword pythonStatement False None True
 
 syn keyword pythonRepeat	for while
 syn keyword pythonConditional	if elif else
@@ -243,7 +225,7 @@ if exists("python_highlight_builtins") && python_highlight_builtins != 0
   " Builtin functions, types and objects
 
   syn keyword pythonBuiltinLogic	True False None NotImplemented 
-  syn keyword pythonBuiltinObj	Ellipsis self object
+  syn keyword pythonBuiltinObj	Ellipsis self object super
   syn keyword pythonBuiltinObj	__debug__ __doc__ __file__ __name__ __package__
 
   syn keyword pythonBuiltinFunc __import__ __init__ abs all any ascii
@@ -254,10 +236,10 @@ if exists("python_highlight_builtins") && python_highlight_builtins != 0
   syn keyword pythonBuiltinFunc globals hasattr hash hex id
   syn keyword pythonBuiltinFunc input int isinstance
   syn keyword pythonBuiltinFunc issubclass iter len list locals map max
-  syn keyword pythonBuiltinFunc memoryview min next object oct open ord
+  syn keyword pythonBuiltinFunc memoryview min next oct open ord
   syn keyword pythonBuiltinFunc pow print property range
   syn keyword pythonBuiltinFunc repr reversed round set setattr
-  syn keyword pythonBuiltinFunc slice sorted staticmethod str sum super tuple
+  syn keyword pythonBuiltinFunc slice sorted staticmethod str sum tuple
   syn keyword pythonBuiltinFunc type vars zip
 endif
 
@@ -286,6 +268,34 @@ if exists("python_highlight_exceptions") && python_highlight_exceptions != 0
   syn keyword pythonExClass	ImportWarning UnicodeWarning
 endif
 
+syn cluster pythonStringType contains=pythonString,pythonUniString,pythonRawString,pythonUniRawString
+syn cluster pythonNumberType contains=pythonNumber,pythonHexNumber,pythonFloat
+syn cluster pythonBuiltin    contains=pythonBuiltinObj,pythonBuiltinFunc,pythonBuiltinLogic
+
+
+
+
+
+" Class definitions
+syn region  pythonClass start="^\s*class\>" end="\s*:" contains=pythonClassDef,pythonClassName,pythonSuperclasses
+syn keyword pythonClassDef class contained nextgroup=pythonClassName
+syn match   pythonClassName	"[a-zA-Z_][a-zA-Z0-9_]*" display contained nextgroup=pythonSuperclasses skipwhite
+" contains pythonBuiltin to show them differently than normal Superclass
+syn region  pythonSuperclasses start="("ms=s+1 end=")"me=e-1 keepend contained contains=@pythonBuiltin,pythonKeyword,pythonSuperclass transparent
+syn match   pythonSuperclass "[a-zA-Z_][a-zA-Z_0-9]*" contained
+
+" Function definitions
+syn region  pythonFunc start="^\s*def\>" end=")\s*:" keepend contains=pythonFuncDef,pythonFuncName,pythonFuncParams
+syn keyword pythonFuncDef def contained nextgroup=pythonFuncName skipwhite
+syn match   pythonFuncName	"[a-zA-Z_][a-zA-Z0-9_]*" display contained nextgroup=pythonFuncParams skipwhite
+syn region  pythonFuncParams start="("ms=s+1 end=")"me=e-1 contained transparent contains=pythonParam 
+syn region   pythonParam start="[a-zA-Z_]" end="\(,\|)\s*:\)" contained contains=pythonParamName,pythonParamDefault,pythonDefaultAssignment transparent nextgroup=pythonParam
+syn match pythonParamName "[a-zA-Z_][a-zA-Z0-9_]*" contained nextgroup=pythonDefaultAssignment skipwhite skipnl
+syn match pythonDefaultAssignment "=" nextgroup=pythonParamDefault skipwhite contained skipnl
+
+syn match pythonParamDefault "=\@<=[^,]*" contained transparent contains=@pythonStringType,@pythonNumberType,@pythonBuiltin,pythonKeyword
+
+
 if exists("python_slow_sync") && python_slow_sync != 0
   syn sync minlines=2000
 else
@@ -296,9 +306,6 @@ else
   syn sync maxlines=200
 endif
 
-syn cluster pythonStringType contains=pythonString,pythonUniString,pythonRawString,pythonUniRawString
-syn cluster pythonNumberType contains=pythonNumber,pythonHexNumber,pythonFloat
-syn cluster pythonBuiltin    contains=pythonBuiltinObj,pythonBuiltinFunc
 
 if version >= 508 || !exists("did_python_syn_inits")
   if version <= 508
@@ -308,17 +315,23 @@ if version >= 508 || !exists("did_python_syn_inits")
     command -nargs=+ HiLink hi def link <args>
   endif
 
+  HiLink pythonBuiltinLogic Number
+  HiLink pythonBuiltinObj   BuiltinObj 
+  HiLink pythonBuiltinFunc  BuiltinFunc
+
+
   HiLink pythonFuncDef     Definition
   HiLink pythonFuncName    Entity
   HiLink pythonParamName    ParamName
+  HiLink pythonParamName	Variable
   HiLink pythonDefaultAssignment pythonAssignment
   HiLink pythonParamDefault Statement
   HiLink pythonClassDef     Definition
   HiLink pythonClassName    Entity
-  HiLink pythonSuperclass   Entity
+  HiLink pythonSuperclass   Superclass
 
   HiLink pythonStatement	Statement
-  HiLink pythonPreCondit	Statement
+  HiLink pythonPreCondit	PreCondition
   HiLink pythonFunction		Function
   HiLink pythonConditional	Conditional
   HiLink pythonRepeat		Repeat
@@ -332,7 +345,7 @@ if version >= 508 || !exists("did_python_syn_inits")
   HiLink pythonDecorator	Define
 
   HiLink pythonComment		Comment
-  HiLink pythonDocstring    Comment
+  HiLink pythonDocstring    String
   HiLink pythonCoding		Special
   HiLink pythonRun		Special
   HiLink pythonTodo		Todo
@@ -369,11 +382,9 @@ if version >= 508 || !exists("did_python_syn_inits")
   HiLink pythonHexError		Error
   HiLink pythonBinError		Error
 
-  HiLink pythonBuiltinLogic Number
-  HiLink pythonBuiltinObj   Number
-  HiLink pythonBuiltinFunc  Structure
 
   HiLink pythonExClass	Structure
+  
 
   delcommand HiLink
 endif
