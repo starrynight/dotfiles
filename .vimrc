@@ -298,6 +298,8 @@ let g:neocomplcache_enable_smart_case = 1
 let g:neocomplcache_enable_camel_case_completion = 1
 " Use underbar completion.
 let g:neocomplcache_enable_underbar_completion = 1
+"
+let g:neocomplcache_enable_fuzzy_completion =1 
 " Set minimum syntax keyword length. 
 let g:neocomplcache_min_syntax_length = 3
 let g:neocomplcache_lock_buffer_name_pattern = '\*ku\*'
@@ -306,8 +308,19 @@ let g:neocomplcache_max_keyword_width = 80
 " Expand the filename width
 let g:neocomplcache_max_menu_width = 255
 
+"For input-saving, this variable controls whether you can  choose a candidate with a alphabet or number displayed beside a candidate after '-'.  When you input 'ho-a',  neocomplcache will select candidate 'a'.
+" let g:neocomplcache_enable_quick_match = 1 
+"
+
+if has("autocmd")
+  autocmd InsertEnter * NeoComplCacheCachingBuffer 
+  autocmd InsertLeave * NeoComplCacheCachingBuffer 
+endif 
+
 let g:neocomplcache_dictionary_filetype_lists = {
-    \ 'default' : ''
+    \ 'default' : '',
+    \ 'vimshell' : $HOME.'/.vimshell_hist',
+    \ 'scheme' : $HOME.'/.gosh_completions'
     \ }
 
 " Define keyword. 
@@ -316,6 +329,9 @@ if !exists('g:neocomplcache_keyword_patterns')
 endif
 
 let g:neocomplcache_keyword_patterns['default'] = '\h\w*'
+
+
+
 
 " Recommended key-mappings. 
 
@@ -329,7 +345,9 @@ inoremap <expr><C-e> neocomplcache#cancel_popup()
 inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<S-TAB>"
 " AutoComplPop like behavior.
-"let g:neocomplcache_enable_auto_select = 1
+" Not a good idea to enable
+" let g:neocomplcache_enable_auto_select = 1
+
 
 " Plugin key-mappings.
 imap <C-k> <Plug>(neocomplcache_snippets_expand)
