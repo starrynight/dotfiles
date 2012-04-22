@@ -87,10 +87,23 @@ set tabstop=2
 set softtabstop=2
 set shiftwidth=2
 
+" Set foldmethod
+set foldmethod=syntax
+set foldmethod=marker
+set foldlevel=99
+
 " Filetype sesific
 if has('autocmd')
 	autocmd  FileType python setlocal  tabstop=4 softtabstop=4 shiftwidth=4 expandtab shiftwidth=4 
-
+" Use indent as foldmethod in python.
+" THX to
+" http://stackoverflow.com/questions/357785/what-is-the-recommended-way-to-use-vim-folding-for-python-coding
+  autocmd FileType python set foldmethod=indent
+" Do not fold internal statements.
+  autocmd FileType python set foldnestmax=2
+	autocmd FileType Makefile set noexpandtab
+" C/C++ specific settings
+  autocmd FileType c,cpp,cc set cindent comments=sr:/*,mb:*,el:*/,:// cino=>s,e0,n0,f0,{0,}0,^-1s,:0,=s,g0,h1s,p2,t0,+2,(2,)20,*30
 endif
 
 " To toggle Insert Paste mode in which autoindect is disabled
@@ -99,6 +112,21 @@ set pastetoggle=<F2>
 
 " Vim's own backup was designed for 1970', not today
 set nobackup
+set autowrite
+
+
+
+" Vim Tip #1160 - Auto Save files when focus is lost.
+if has('autocmd')
+  autocmd FocusLost * :wa
+
+"Restore cursor to file position in previous editing session
+"Very useful tips 
+"From https://github.com/vgod/vimrc/blob/master/vimrc
+  set viminfo='10,\"100,:20,%,n~/.viminfo
+  autocmd BufReadPost * if line("'\"") > 0|if line("'\"") <= line("$")|exe("norm '\"")|else|exe "norm $"|endif|endif
+endif
+
 
 " This one I don't understand
 set hidden
@@ -114,9 +142,14 @@ set hidden
 set showmatch                        " Show matching braces when over one
 set ruler                            " Always show current position
 set number                           " Always show line-numbers
-set antialias                        " Everyone loves antialias
-"set wildmenu                         " Wild menu
-"set wildmode=longest,list,full       " Wild menu options
+set antialias                        " Everyone loves a"tialias
+" Get from http://piao-tech.blogspot.com/2008/10/basic-vimrc-file.html
+set ttyfast                          " Smoother ReDraw 
+set wildmenu                         " Wild menu (in command line)
+set wildmode=longest,list,full       " Wild menu options (in command line)
+set wildchar=<TAB> " start wild expansion in the command line using <TAB>
+
+
 set title
 " Statusline
 set statusline=%F%m%r%h%w[%L][%{&ff}]%y[%p%%][%04l,%04v]
@@ -208,6 +241,12 @@ map <C-h> <C-w>h
 map <C-k> <C-w>k
 map <C-l> <C-w>l
 
+" Fold/Unfold with Shift+Space
+" https://github.com/originell/vim-config/blob/master/vimrc
+nnoremap <s-space> za
+vnoremap <s-space> zf
+
+"
 "Tired of clearing highlighted searches by searching for “ldsfhjkhgakjks”?
 " Use this:
 "nmap <silent> ,/ :nohlsearch<CR> 
@@ -228,6 +267,17 @@ if has("autocmd")
   autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
   autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 endif
+
+"http://stackoverflow.com/questions/903847/prevent-splitting-window-when-using-pythoncomplete-in-vim
+set completeopt-=preview
+"http://stackoverflow.com/questions/3105307/how-do-you-automatically-remove-the-preview-window-after-autocompletion-in-vim
+" If you prefer the Omni-Completion tip window to close when a selection is
+" made, these lines close it on movement in insert mode or when leaving
+" insert mode
+"autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
+"autocmd InsertLeave * if pumvisible() == 0|pclose|endif
+
+
 "============= Command-T ===================
 " Default trigger is
 " <Leader>t
@@ -295,6 +345,7 @@ inoremap <expr><Up>    pumvisible() ? "\<C-p>" : neocomplcache#smart_close_popup
 inoremap <expr><Down> pumvisible() ? "\<C-n>" : neocomplcache#smart_close_popup() . "\<Down>"
 
 "=============== UltiSnips =============
+set runtimepath+=~/.vim/bundle/ultisnips/
 let g:UltiSnipsExpandTrigger = "<F3>"
 let g:UltiSnipsListSnippets  = "<S-F3>"
 
@@ -336,7 +387,10 @@ if has("autocmd")
 endif 
 "
 "
-
+"
+"Turn Off DelimitMate"
+"It seems conflicts with ohter autocomplete"
+let g:loaded_delimitMate = 0
 
 
 
