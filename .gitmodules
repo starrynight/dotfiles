@@ -22,9 +22,6 @@
 [submodule ".vim/bundle/pyflakes"]
 	path = .vim/bundle/pyflakes
 	url = https://github.com/mitechie/pyflakes-pathogen.git
-[submodule ".vim/bundle/delimitmate"]
-	path = .vim/bundle/delimitmate
-	url = https://github.com/Raimondi/delimitMate.git
 [submodule ".vim/bundle/closetag"]
 	path = .vim/bundle/closetag
 	url = https://github.com/docunext/closetag.vim.git
