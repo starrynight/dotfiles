@@ -110,8 +110,10 @@ endif
 " Suiteable to pasted formatted code into vim
 set pastetoggle=<F2>
 
+" <F3> is reserved for utilscripts
+
 " To toggle line number
-nmap <F3> :set number! number?<cr>
+nmap <F4> :set number! number?<cr>
 " Vim's own backup was designed for 1970', not today
 set nobackup
 set autowrite
