@@ -110,7 +110,7 @@ endif
 " Suiteable to pasted formatted code into vim
 set pastetoggle=<F2>
 
-" <F3> is reserved for utilscripts
+" <F3> is reserved for utilsnips
 
 " To toggle line number
 nmap <F4> :set number! number?<cr>
