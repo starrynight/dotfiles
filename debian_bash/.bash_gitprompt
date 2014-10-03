@@ -128,7 +128,7 @@ prompt () {
   else
     PROMPT_COLOR=$Red
   fi
-  PS1="${debian_chroot:+($debian_chroot)}$BGreen\u@\h$RESET:$BBlue\w$RESET\$([[ -n \$(git branch 2> /dev/null) ]] && echo \"$RESET on \")$IRed\$(parse_git_branch)$RESET\n$PROMPT_COLOR\$ $RESET"
+  PS1="${debian_chroot:+($debian_chroot)}$BGreen\u@\h$RESET:$BBlue\w$RESET\$([[ -n \$(git branch 2> /dev/null) ]] && echo \"$RESET on \")$IRed\$(parse_git_branch)$RESET\n$PROMPT_COLOR\\$ $RESET"
 
 }
 
