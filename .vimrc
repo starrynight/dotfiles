@@ -286,85 +286,12 @@ set completeopt-=preview
 " Default trigger is
 " <Leader>t
 "
-"============== SuperTab=====================
-" If you prefer the Omni-Completion tip window to close when a selection is
-" made, these lines close it on movement in insert mode or when leaving
-" insert mode
-"autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
-"autocmd InsertLeave * if pumvisible() == 0|pclose|endif
-"let g:SuperTabDefaultCompletionType = 'context'
-"=============== NeoCompleteCache =============
-" Use neocomplcache. 
-let g:neocomplcache_enable_at_startup = 1
-" Use smartcase. 
-let g:neocomplcache_enable_smart_case = 1
-" Use camel case completion. 
-let g:neocomplcache_enable_camel_case_completion = 1
-" Use underbar completion.
-let g:neocomplcache_enable_underbar_completion = 1
-"
-let g:neocomplcache_enable_fuzzy_completion =1 
-" Set minimum syntax keyword length. 
-let g:neocomplcache_min_syntax_length = 3
-let g:neocomplcache_lock_buffer_name_pattern = '\*ku\*'
-" Expand the keyword width
-let g:neocomplcache_max_keyword_width = 80
-" Expand the filename width
-let g:neocomplcache_max_menu_width = 255
-
-"For input-saving, this variable controls whether you can  choose a candidate with a alphabet or number displayed beside a candidate after '-'.  When you input 'ho-a',  neocomplcache will select candidate 'a'.
-" let g:neocomplcache_enable_quick_match = 1 
-"
-
-if has("autocmd")
-  autocmd InsertEnter * NeoComplCacheCachingBuffer 
-  autocmd InsertLeave * NeoComplCacheCachingBuffer 
-endif 
-
-let g:neocomplcache_dictionary_filetype_lists = {
-    \ 'default' : '',
-    \ 'vimshell' : $HOME.'/.vimshell_hist',
-    \ 'scheme' : $HOME.'/.gosh_completions'
-    \ }
-
-" Define keyword. 
-if !exists('g:neocomplcache_keyword_patterns')
-    let g:neocomplcache_keyword_patterns = {}
-endif
-
-let g:neocomplcache_keyword_patterns['default'] = '\h\w*'
+"=============== YouCompleteMe =============
+" Use YMC. 
+let g:ycm_global_ycm_extra_conf = "~/.vim/.ycm_extra_conf.py"
 
 
 
-
-" Recommended key-mappings. 
-
-" <CR>: close popup and save indent. 
-inoremap <expr><CR> neocomplcache#smart_close_popup() . "\<CR>"
-inoremap <expr><C-h> neocomplcache#smart_close_popup()
-inoremap <expr><C-y> neocomplcache#close_popup()
-inoremap <expr><C-e> neocomplcache#cancel_popup()
-
-" <TAB>: completion switching. 
-inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<S-TAB>"
-" AutoComplPop like behavior.
-" Not a good idea to enable
-" let g:neocomplcache_enable_auto_select = 1
-
-
-" Plugin key-mappings.
-imap <C-k> <Plug>(neocomplcache_snippets_expand)
-smap <C-k> <Plug>(neocomplcache_snippets_expand)
-inoremap <expr><C-g> neocomplcache#undo_completion()
-inoremap <expr><C-l> neocomplcache#complete_common_string()
-
-"" <LEFT> <Right> can close the pop menu directly
-"" <UP> and <Down> will see whether the popup menu exists or not
-inoremap <expr><Left>  neocomplcache#close_popup() . "\<Left>"
-inoremap <expr><Right> neocomplcache#close_popup() . "\<Right>"
-inoremap <expr><Up>    pumvisible() ? "\<C-p>" : neocomplcache#smart_close_popup() . "\<Up>"
-inoremap <expr><Down> pumvisible() ? "\<C-n>" : neocomplcache#smart_close_popup() . "\<Down>"
 
 "=============== UltiSnips =============
 set runtimepath+=~/.vim/bundle/ultisnips/
@@ -410,9 +337,6 @@ endif
 "
 "
 "
-"Turn Off DelimitMate"
-"It seems conflicts with ohter autocomplete"
-let g:loaded_delimitMate = 0
 
 
 

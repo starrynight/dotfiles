@@ -31,8 +31,8 @@
 [submodule "pydoc"]
 	path = .vim/bundle/pydoc
 	url = https://github.com/fs111/pydoc.vim.git
-[submodule "youcompleteme"]
-  path = .vim/bundle/youcompleteme
-  url = https://github.com/Valloric/YouCompleteMe.git
   
 
+[submodule "youcompleteme"]
+	path = .vim/bundle/youcompleteme
+	url = https://github.com/Valloric/YouCompleteMe.git
