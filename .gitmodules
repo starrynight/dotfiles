@@ -1,6 +1,6 @@
 [submodule "command-t"]
 	path = .vim/bundle/command-t
-	url = git://git.wincent.com/command-t.git
+	url = https://github.com/wincent/command-t.git
 [submodule "surround"]
 	path = .vim/bundle/surround
 	url = https://github.com/tpope/vim-surround.git
@@ -19,18 +19,20 @@
 [submodule "tagbar"]
 	path = .vim/bundle/tagbar
 	url = https://github.com/majutsushi/tagbar.git
-[submodule ".vim/bundle/pyflakes"]
+[submodule "pyflakes"]
 	path = .vim/bundle/pyflakes
 	url = https://github.com/mitechie/pyflakes-pathogen.git
-[submodule ".vim/bundle/closetag"]
+[submodule "closetag"]
 	path = .vim/bundle/closetag
 	url = https://github.com/docunext/closetag.vim.git
-[submodule ".vim/bundle/pytest"]
+[submodule "pytest"]
 	path = .vim/bundle/pytest
 	url = https://github.com/alfredodeza/pytest.vim.git
-[submodule ".vim/bundle/pydoc"]
+[submodule "pydoc"]
 	path = .vim/bundle/pydoc
 	url = https://github.com/fs111/pydoc.vim.git
-[submodule ".vim/bundle/neocomplcache"]
-	path = .vim/bundle/neocomplcache
-	url = https://github.com/Shougo/neocomplcache.git
+[submodule "youcompleteme"]
+  path = .vim/bundle/youcompleteme
+  url = https://github.com/Valloric/YouCompleteMe.git
+  
+
