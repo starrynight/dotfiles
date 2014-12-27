@@ -294,9 +294,10 @@ let g:ycm_global_ycm_extra_conf = "~/.vim/.ycm_extra_conf.py"
 
 
 "=============== UltiSnips =============
-set runtimepath+=~/.vim/bundle/ultisnips/
+" set runtimepath+=~/.vim/bundle/ultisnips/
 let g:UltiSnipsExpandTrigger = "<F3>"
-let g:UltiSnipsListSnippets  = "<S-F3>"
+let g:UltiSnipsJumpForwardTrigger="<C-x>"
+let g:UltiSnipsJumpBackwardTrigger="<C-z>"
 
 "=============== Tcomment  =============
 " Macvim doesn't pass <C-/> to vim
