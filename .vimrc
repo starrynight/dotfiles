@@ -323,9 +323,8 @@ let NERDTreeIgnore = ['\.pyc$']
 "
 "============= CTags and Tagbar ===========
 "
-let g:tagbar_ctags_bin="/usr/local/bin/ctags"
-nnoremap <Leader>tag :!/usr/local/bin/ctags -R --python-kinds=-i *.py<CR>
-nnoremap <silent> <Leader>bar :TagbarToggle<CR>
+let g:tagbar_ctags_bin="/usr/bin/ctags"
+nnoremap <silent> <Leader>b :TagbarToggle<CR>
 "
 "
 "============ CloseTags ===================
