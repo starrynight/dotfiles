@@ -5,6 +5,8 @@
 #  Bunch-o-predefined colors.  Makes reading code easier than escape sequences.
 #  I don't remember where I found this.  o_O
 
+# The following are 8 color table. Modern termail support 256 color. 
+
 # Reset
 RESET="\[\033[0m\]"       # Text Reset
 
@@ -77,6 +79,17 @@ On_IBlue="\[\033[0;104m\]"    # Blue
 On_IPurple="\[\033[10;95m\]"  # Purple
 On_ICyan="\[\033[0;106m\]"    # Cyan
 On_IWhite="\[\033[0;107m\]"   # White
+
+
+# 256 color example
+# see http://misc.flogisoft.com/bash/tip_colors_and_formatting
+# for color pallete
+# requires export TERM=xterm-256color
+# color code [38;5;xxxm\]
+Orange="\[\033[38;5;172m\]"
+DBlue="\[\033[38;5;67m\]"
+
+
 
 # Various variables you might want for your PS1 prompt instead
 Time12h="\T"
