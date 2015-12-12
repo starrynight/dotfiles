@@ -285,10 +285,24 @@ set completeopt-=preview
 "============= Command-T ===================
 " Default trigger is
 " <Leader>t
+
+
+
 "
 "=============== YouCompleteMe =============
 " Use YMC. 
 let g:ycm_global_ycm_extra_conf = "~/.vim/.ycm_extra_conf.py"
+" let OmniCpp_DefaultNamespaces = ["_GLIBCXX_STD"]
+set tags+=/usr/include/c++/4.8/stdcpp.tags
+autocmd InsertLeave * if pumvisible() == 0|pclose|endif "close autocomplete menu when leaving insert mode
+
+let g:ycm_complete_in_comments=1
+let g:ycm_confirm_extra_conf=0
+let g:ycm_collect_identifiers_from_tags_files=1
+let g:ycm_min_num_of_chars_for_completion=2
+let g:ycm_seed_identifiers_with_syntax=1
+let g:ycm_cache_omnifunc=0
+nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
 
 
 
@@ -316,16 +330,28 @@ endif
 "
 "=============== NerdTree ===============
 "
-map <leader>n :NERDTreeToggle<CR>
+
+map <leader>n :NERDTreeToggle<CR>                                           
 "" ignnore .pyc files
 let NERDTreeIgnore = ['\.pyc$']
+let NERDTreeAutoDeleteBuffer=1
+" Start nerdtree when no file is specified
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+autocmd vimenter *.cpp,*.hpp,*.c,*.h,*.cc,*.cxx  NERDTree
+
+
 "
 "
 "============= CTags and Tagbar ===========
 "
-let g:tagbar_ctags_bin="/usr/bin/ctags"
-nnoremap <silent> <Leader>b :TagbarToggle<CR>
 "
+let g:tagbar_ctags_bin="/usr/bin/ctags"
+nnoremap <Leader>tag :!/usr/bin/ctags -R --python-kinds=-i *.py<CR>
+nnoremap <silent> <Leader>b :TagbarToggle<CR>
+let g:tagbar_width=30
+autocmd BufReadPost *.cpp,*.c,*.h,*.hpp,*.cc,*.cxx call tagbar#autoopen()
+
 "
 "============ CloseTags ===================
 "
@@ -337,8 +363,17 @@ endif
 "
 "
 "
-
-
-
+"
+"=========== Airline =======================
+let g:airline_theme             = 'powerlineish'
+" let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#whitespace#enabled = 0
+" Hide separator due to lack of patched font
+" let g:airline_left_sep=''
+" let g:airline_right_sep=''
+" The default setting of 'laststatus' is for the statusline to not appear
+" until a split is created. If you want it to appear all the time, add the
+" following to your vimrc: set laststatus=2
+set laststatus=2
 
 
