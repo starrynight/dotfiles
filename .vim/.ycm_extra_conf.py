@@ -31,6 +31,8 @@ flags = [
     '-isystem', '/usr/local/include',
     '-isystem', '/usr/lib/gcc/x86_64-linux-gnu/4.8/include',
     '-I', 'include'
+    '-I', '/usr/local/include',
+    '-I', '/usr/include/c++/4.8/',
     '-I.'
 ]
 
