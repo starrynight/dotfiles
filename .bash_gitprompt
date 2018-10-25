@@ -91,6 +91,9 @@ Orange="\[\033[38;5;172m\]"
 DBlue="\[\033[38;5;67m\]"
 LightPurple="\[\033[38;5;096m\]"
 LightCyan="\[\033[38;5;103m\]"
+LightRed="\[\033[38;5;180m\]"
+LightBlue="\[\033[38;5;32m\]"
+
 
 
 # Various variables you might want for your PS1 prompt instead
@@ -143,7 +146,7 @@ prompt () {
   else
     PROMPT_COLOR=$Red
   fi
-  PS1="${debian_chroot:+($debian_chroot)}$BGreen\u@\h$RESET:$BBlue\w$RESET\$([[ -n \$(git branch 2> /dev/null) ]] && echo \"$RESET on \")$IRed\$(parse_git_branch)$RESET\n$PROMPT_COLOR\\$ $RESET"
+  PS1="${debian_chroot:+($debian_chroot)}$LightBlue\u$LightRed@\h$RESET:$BBlue\w$RESET\$([[ -n \$(git branch 2> /dev/null) ]] && echo \"$RESET on \")$IRed\$(parse_git_branch)$RESET\n$PROMPT_COLOR\\$ $RESET"
 
 }
 
