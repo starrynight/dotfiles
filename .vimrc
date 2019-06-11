@@ -48,6 +48,7 @@ Plug 'jnurmine/Zenburn'
 
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+Plug 'tpope/vim-fugitive'       " To support git info in Airline
 
 
 
@@ -63,8 +64,7 @@ Plug 'ludovicchabant/vim-gutentags'
 Plug 'skywind3000/gutentags_plus'
 
 Plug 'rust-lang/rust.vim', { 'for': 'rust' }
-Plug 'tpope/vim-fugitive'
-Plug 'w0rp/ale'
+Plug 'w0rp/ale'                 " Language lint support
 
 Plug '~/.vim/plugged/YouCompleteMe'
 
@@ -515,38 +515,13 @@ let g:ale_cpp_cppcheck_options = ''
 
 
 
-"========== Syntastic ======================
-" set statusline+=%#warningmsg#
-" set statusline+=%{SyntasticStatuslineFlag()}
-" set statusline+=%*
-"
-" let g:syntastic_always_populate_loc_list = 1
-" let g:syntastic_auto_loc_list = 1
-" let g:syntastic_check_on_open = 1
-" let g:syntastic_check_on_wq = 0
 "
 "========== Switch Between Header and CC File=========
   map <F6> :call CurtineIncSw()<CR>
 
 
 
-"=================== Vim Racer========================
-" if executable('racer')
-" autocmd User asyncomplete_setup call asyncomplete#register_source(
-"     \ asyncomplete#sources#racer#get_source_options())
-" endif
-"' set hidden
-" let g:racer_cmd = "/home/user/.cargo/bin/racer"
-" let g:racer_experimental_completer = 1
-" au FileType rust nmap gd <Plug>(rust-def)
-" au FileType rust nmap gs <Plug>(rust-def-split)
-" au FileType rust nmap gx <Plug>(rust-def-vertical)
-" au FileType rust nmap <leader>gd <Plug>(rust-doc)
-
-"let g:rustfmt_autosave = 1
-
-
-" - Final Touch
+"========== Final Touch =============
 nnoremap <CR> :noh<CR><CR>:<backspace> " Press Enter will clear search highlight, backspace to clear :noh from status line
 " Clear previous highlight
 " Mind the double quote and the back slash to escape the special key
