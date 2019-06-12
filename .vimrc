@@ -1,9 +1,14 @@
+" To Do:
+" 1. C++ Environment setup
+" https://www.zhihu.com/question/47691414
+" https://docker.pkg.github.com/banxi1988/me/issues/16
 "
-"
-" Biased for Python
+" 2. Biased for Python
 " Reference links:  
+" https://zhuanlan.zhihu.com/p/30022074
 " http://nvie.com/posts/how-i-boosted-my-vim/
 " http://anderse.wordpress.com/2011/09/07/my-vim-gvim-configuration/
+
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -34,7 +39,7 @@ let mapleader=','
 " - Avoid using standard Vim directory names like 'plugin'
 call plug#begin('~/.vim/plugged')
 
-
+" Themes
 Plug 'arcticicestudio/nord-vim'
 Plug 'ayu-theme/ayu-vim'
 Plug 'jacoborus/tender.vim'
@@ -50,10 +55,12 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'tpope/vim-fugitive'       " To support git info in Airline
 
-
-
 Plug 'tomtom/tcomment_vim'
 Plug 'scrooloose/nerdtree'
+Plug 'terryma/vim-multiple-cursors'
+Plug 'junegunn/vim-easy-align'
+Plug 'Chiel92/vim-autoformat'
+Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
 
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
@@ -65,8 +72,8 @@ Plug 'skywind3000/gutentags_plus'
 
 Plug 'rust-lang/rust.vim', { 'for': 'rust' }
 Plug 'w0rp/ale'                 " Language lint support
-
 Plug '~/.vim/plugged/YouCompleteMe'
+Plug 'skywind3000/asyncrun.vim'
 
 
 " Initialize plugin system
@@ -166,19 +173,19 @@ set foldlevel=99
 set nobackup
 set autowrite
   
-
+  
 
 " Filetype sesific
 if has('autocmd')
   augroup Indention
 	autocmd!
-		autocmd BufReadPost .vimrc setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab smarttab
+		autocmd FileType vim setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab smarttab
 		autocmd FileType python setlocal    tabstop=4 softtabstop=4 shiftwidth=4 expandtab 
 		autocmd FileType swift setlocal     tabstop=4 softtabstop=4 shiftwidth=4 expandtab 
 	" Use indent as foldmethod in python.
 	" THX to
 	" http://stackoverflow.com/questions/357785/what-is-the-recommended-way-to-use-vim-folding-for-python-coding
-		autocmd FileType python set foldmethod=indent
+		autocmd FileType python set foldmethod=indent foldlevel=99
 	" Do not fold internal statements.
 		autocmd FileType python set foldnestmax=2
 		autocmd FileType Makefile set noexpandtab
@@ -296,6 +303,7 @@ vmap Q gq
 nmap Q gqap
 
 " Easy window navigation
+map <C-j> <C-w>j
 map <C-h> <C-w>h
 map <C-k> <C-w>k
 map <C-l> <C-w>l
@@ -496,7 +504,7 @@ set noshowmode  " Disable mode line, all info is provided in air line
 
 
 "
-"=============== ALE ======================
+"========= ALE (Asynchronous Lint Engine) =============
 "
 
 let g:ale_linters_explicit = 1
@@ -518,6 +526,60 @@ let g:ale_cpp_cppcheck_options = ''
 "
 "========== Switch Between Header and CC File=========
   map <F6> :call CurtineIncSw()<CR>
+
+
+"========== Easy Alignment ==========
+"" Start interactive EasyAlign in visual mode (e.g. vipga)
+xmap ga <Plug>(EasyAlign)
+" Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap ga <Plug>(EasyAlign)
+
+"========== Auto Format ==============
+"
+nnoremap <M-F5> :Autoformat<CR>
+let g:autoformat_autoindent = 0
+let g:autoformat_retab = 0
+let g:autoformat_remove_trailing_spaces = 0
+
+"========== Compile/Run/Debug =========
+" Automatically open quickfix window ，height 6
+let g:asyncrun_open = 6
+
+" Ring the bell after job is done
+let g:asyncrun_bell = 1
+
+" toggle quickfix window
+nnoremap <C-F10> :call asyncrun#quickfix_toggle(6)<cr>
+
+nnoremap <F5> :call CompileRunGcc()<CR>
+func! CompileRunGcc()
+    exec "w"
+    if &filetype == 'c'
+            exec "!g++ % -o %<"
+            exec "!time ./%<"
+    elseif &filetype == 'cpp'
+            exec "!g++ % -o %<"
+            exec "!time ./%<"
+    elseif &filetype == 'java'
+            exec "!javac %"
+            exec "!time java %<"
+    elseif &filetype == 'sh'
+            :!time bash %
+    elseif &filetype == 'python'
+            exec "!clear"
+            exec "!time python3 %"
+    elseif &filetype == 'html'
+            exec "!firefox % &"
+    elseif &filetype == 'go'
+            " exec "!go build %<"
+            exec "!time go run %"
+    elseif &filetype == 'mkd'
+            exec "!~/.vim/markdown.pl % > %.html &"
+            exec "!firefox %.html &"
+    elseif &filetype == 'rust'
+        :AsyncRun rustc  "$(VIM_FILEPATH)" && ./"$(VIM_FILENOEXT)" 
+    endif
+endfunc
 
 
 
