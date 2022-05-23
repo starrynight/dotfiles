@@ -33,51 +33,6 @@ let mapleader=','
 
 
 
-" Specify a directory for plugins
-
-" - For Neovim: ~/.local/share/nvim/plugged
-" - Avoid using standard Vim directory names like 'plugin'
-call plug#begin('~/.vim/plugged')
-
-" Themes
-Plug 'arcticicestudio/nord-vim'
-Plug 'ayu-theme/ayu-vim'
-Plug 'jacoborus/tender.vim'
-Plug 'rakr/vim-one'
-Plug 'drewtempelmeyer/palenight.vim'
-Plug 'KeitaNakamura/neodark.vim'
-Plug 'iCyMind/NeoSolarized'
-Plug 'crusoexia/vim-monokai'
-Plug 'morhetz/gruvbox'
-Plug 'jnurmine/Zenburn'
-
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-Plug 'tpope/vim-fugitive'       " To support git info in Airline
-
-Plug 'tomtom/tcomment_vim'
-Plug 'scrooloose/nerdtree'
-Plug 'terryma/vim-multiple-cursors'
-Plug 'junegunn/vim-easy-align'
-Plug 'Chiel92/vim-autoformat'
-Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
-
-Plug 'SirVer/ultisnips'
-Plug 'honza/vim-snippets'
-
-
-Plug 'majutsushi/tagbar'
-Plug 'ludovicchabant/vim-gutentags'
-Plug 'skywind3000/gutentags_plus'
-
-Plug 'rust-lang/rust.vim', { 'for': 'rust' }
-Plug 'w0rp/ale'                 " Language lint support
-Plug '~/.vim/plugged/YouCompleteMe'
-Plug 'skywind3000/asyncrun.vim'
-
-
-" Initialize plugin system
-call plug#end()
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Theme Selection
@@ -345,13 +300,12 @@ set completeopt-=preview
 let g:ycm_key_invoke_completion='<c-z>'
 let g:ycm_global_ycm_extra_conf = "~/.vim/.ycm_extra_conf.py"
 " set tags+=/usr/include/c++/4.8/stdcpp.tags
-" if has("autocmd") 
-"   augroup YouCompleteMeAutoClose
-"     autocmd!
-"     autocmd InsertLeave * if pumvisible() == 0|pclose|endif "close autocomplete menu when leaving insert mode
-"   augroup end
-" endif
-
+if has("autocmd") 
+  augroup YouCompleteMeAutoClose
+    autocmd!
+    autocmd InsertLeave * if pumvisible() == 0|pclose|endif "close autocomplete menu when leaving insert mode
+  augroup end
+endif
 
 let g:ycm_max_num_candidates = 30
 
@@ -432,25 +386,6 @@ else
 endif
 
 "
-"=============== NerdTree ===============
-"
-map <leader>n :NERDTreeToggle<CR>                                           
-"" ignnore .pyc files
-let NERDTreeIgnore = ['\.pyc$']
-let NERDTreeAutoDeleteBuffer=1
-let NERDTreeMinimalUI = 1
-let NERDTreeDirArrows = 1
-augroup NerdTreeStart
-  autocmd!
-  " Automatically close a tab if the only remaining window is NerdTree 
-  autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-  " Start nerdtree when no file is specified
-  autocmd StdinReadPre * let s:std_in=1
-  autocmd Vimenter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
-  autocmd Vimenter *.cpp,*.hpp,*.c,*.h,*.cc,*.cxx  NERDTree
-augroup End
-
-"
 "
 "============= CTags/GTags and Tagbar ===========
 "
@@ -478,18 +413,6 @@ augroup TagBarStart
   autocmd BufReadPost *.cpp,*.c,*.h,*.hpp,*.cc,*.cxx call tagbar#autoopen()
 augroup end
 
-"
-"============ CloseTags ===================
-"
-"
-" if has("autocmd")
-"   autocmd FileType html,htmldjango,jinjahtml,eruby,mako let b:closetag_html_style=1
-"   autocmd FileType html,xhtml,xml,htmldjango,jinjahtml,eruby,mako source ~/.vim/bundle/closetag/plugin/closetag.vim
-"   
-" endif 
-"
-"
-"
 "
 "=========== Airline =======================
 let g:airline_theme='powerlineish'
